@@ -72,7 +72,7 @@ function create ()
 
 
     player = this.physics.add.sprite(100, 450, 'dude');
-    player.setScale(1.1)
+    player.setScale(1.2)
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 
@@ -179,7 +179,7 @@ function collectStar (player, star)
         var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
 
         var bomb = bombs.create(x, 24, 'bomb');
-        bomb.setScale(0.5); // Устанавливаем масштаб бомбы
+        bomb.setScale(0.3); // Устанавливаем масштаб бомбы
         bomb.setBounce(1);
         bomb.setCollideWorldBounds(true);
         bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
@@ -252,17 +252,11 @@ function movePlatforms() {
     platform2.x = newPlatform2X;
     platform3.x = newPlatform3X;
 
-    // Refresh the bodies of the platforms after moving
-    platform1.refreshBody();
-    platform2.refreshBody();
-    platform3.refreshBody();
-    
-    // Store the new positions as the initial positions for the next iteration
-    platform1.initialX = newPlatform1X;
-    platform2.initialX = newPlatform2X;
-    platform3.initialX = newPlatform3X;
+    // Refresh bodies of all platforms after moving
+    [platform1, platform2, platform3].forEach(function(platform) {
+        platform.body.updateFromGameObject();
+    });
 }
-
 
 </script>
 
